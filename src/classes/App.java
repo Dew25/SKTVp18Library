@@ -8,7 +8,9 @@ package classes;
 import entity.Book;
 import entity.History;
 import entity.Reader;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -22,6 +24,10 @@ public class App {
     
     public void run(){
         Scanner scanner = new Scanner(System.in);
+        List<Book> listBooks = new ArrayList<>();
+        List<Reader> listReaders = new ArrayList<>();
+        List<History> listHistories = new ArrayList<>();
+        HistoryProvider historyProvider = new HistoryProvider();
         boolean flagExit = true;
         do{
             System.out.println("Список задач:");
@@ -44,22 +50,43 @@ public class App {
                     System.out.println("Новая книга.");
                     BookProvider bookProvider = new BookProvider();
                     Book book = bookProvider.createBook();
-                    System.out.println(book.toString());
+                    listBooks.add(book);
+                    for(Book b : listBooks){
+                       System.out.println(b.toString()); 
+                    }
                     break;
                 case "2":
-                    System.out.println("Выполняем 2 задачу");
+                    System.out.println("Новый читатель.");
+                    ReaderProvider readerProvider = new ReaderProvider();
+                    Reader reader = readerProvider.createReader();
+                    listReaders.add(reader);
+                    for(Reader r : listReaders){
+                       System.out.println(r.toString()); 
+                    }
                     break;
                 case "3":
-                    System.out.println("Выполняем 3 задачу");
+                    System.out.println("Список книг библиотеки:");
+                    int i = 1;
+                    for(Book b : listBooks){
+                        System.out.println(i+". "+b.toString());
+                        i++;
+                    }
                     break;
                 case "4":
-                    System.out.println("Выполняем 4 задачу");
+                    System.out.println("Список читателей библиотеки:");
+                    for(int j=0;j<listReaders.size();j++){
+                        System.out.println(j+1+". "+listReaders.get(j).toString());
+                    }
                     break;
                 case "5":
-                    System.out.println("Выполняем 5 задачу");
+                    System.out.println("Выдаем книгу читателю");
+                    
+                    History history = historyProvider.createHistory(listBooks, listReaders);
+                    listHistories.add(history);
                     break;
                 case "6":
-                    System.out.println("Выполняем 6 задачу");
+                    System.out.println("Возвращение книги");
+                    historyProvider.returnBook(listHistories);
                     break;
                 default:
                     break;
