@@ -58,13 +58,14 @@ public class HistoryProvider {
         int i=1;
         for(History history : listHistories){
             if(history.getReturnDate() == null){
-                System.out.printf("%d. Читатлель %s %s читает книгу %s%n"
+                System.out.printf("%d. Читатель %s %s читает книгу %s%n"
                     ,i
                     ,history.getReader().getName()
                     ,history.getReader().getLastname()
                     ,history.getBook().getTitle()
                 );
             }
+            i++;
         }
         System.out.println("Выберите возвращаемую книгу: ");
         int numHistory = scanner.nextInt();

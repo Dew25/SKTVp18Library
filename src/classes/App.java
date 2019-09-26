@@ -18,16 +18,19 @@ import java.util.Scanner;
  * @author user
  */
 public class App {
-
+    List<Book> listBooks = new ArrayList<>();
+    List<Reader> listReaders = new ArrayList<>();
     public App() {
+        SaveToFile saveToFile = new SaveToFile();
+        listBooks = saveToFile.loadBooks();
+        listReaders = saveToFile.loadReaders();
     }
     
     public void run(){
         Scanner scanner = new Scanner(System.in);
-        List<Book> listBooks = new ArrayList<>();
-        List<Reader> listReaders = new ArrayList<>();
         List<History> listHistories = new ArrayList<>();
         HistoryProvider historyProvider = new HistoryProvider();
+        SaveToFile saveToFile = new SaveToFile();                    
         boolean flagExit = true;
         do{
             System.out.println("Список задач:");
@@ -51,6 +54,7 @@ public class App {
                     BookProvider bookProvider = new BookProvider();
                     Book book = bookProvider.createBook();
                     listBooks.add(book);
+                    saveToFile.saveBooks(listBooks);
                     for(Book b : listBooks){
                        System.out.println(b.toString()); 
                     }
@@ -60,6 +64,7 @@ public class App {
                     ReaderProvider readerProvider = new ReaderProvider();
                     Reader reader = readerProvider.createReader();
                     listReaders.add(reader);
+                    saveToFile.saveReaders(listReaders);
                     for(Reader r : listReaders){
                        System.out.println(r.toString()); 
                     }
@@ -92,29 +97,5 @@ public class App {
                     break;
             }
         }while(flagExit);
-        
-        
-//        System.out.println("Привет!");
-//        Book book = new Book();
-//        book.setTitle("Voina i mir");
-//        book.setAuthor("Lev Tolstoy");
-//        book.setYear(2010);
-//        System.out.println(book.toString());
-//        book.setYear(2011);
-//        System.out.println(book.getTitle());
-//        System.out.println(book.getYear());
-//        Reader reader = new Reader();
-//        reader.setName("Ivan");
-//        reader.setLastname("Ivanov");
-//        reader.setEmail("ivan@ivanov.ee");
-//        System.out.println(reader.toString());
-//        System.out.println("Выдаем книгу.");
-//        History history = new History();
-//        history.setBook(book);
-//        history.setReader(reader);
-//        history.setTakeOn(new Date());
-//        System.out.println("Выдана книга: "+history.toString());
-//        history.setReturnDate(new Date());
-//        System.out.println("Книга возвращена: "+history.toString());
     }
 }
