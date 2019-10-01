@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author user
  */
-public class History  implements Serializable{
+public class History implements Serializable{
     private Book book;
     private Reader reader;
     private Date takeOn;

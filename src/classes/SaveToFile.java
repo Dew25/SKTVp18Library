@@ -8,7 +8,6 @@ package classes;
 import entity.Book;
 import entity.History;
 import entity.Reader;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -25,6 +24,7 @@ import java.util.logging.Logger;
  * @author user
  */
 public class SaveToFile {
+    
     public void saveBooks(List<Book> listBooks){
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
@@ -54,7 +54,6 @@ public class SaveToFile {
             }
         }
     }
-
     public List<Book> loadBooks(){
         List<Book> listBooks = new ArrayList<>();
         FileInputStream fileInputStream = null;
@@ -87,7 +86,6 @@ public class SaveToFile {
         }
         return listBooks;
     }   
-    
     public void saveReaders(List<Reader> listReaders){
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
@@ -149,8 +147,8 @@ public class SaveToFile {
         }
         return listReaders;
     }   
-    
-        public void saveHistories(List<History> listHistories){
+
+    void saveHistories(List<History> listHistories) {
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
         try {
@@ -180,7 +178,7 @@ public class SaveToFile {
         }
     }
 
-    public List<History> loadHistories(){
+    List<History> loadHistories() {
         List<History> listHistories = new ArrayList<>();
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
@@ -211,6 +209,7 @@ public class SaveToFile {
             }
         }
         return listHistories;
-    }   
-    
+    }
+
+   
 }
