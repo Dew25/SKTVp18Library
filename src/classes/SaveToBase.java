@@ -14,6 +14,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+
+
 /**
  *
  * @author user
@@ -31,10 +33,15 @@ public class SaveToBase {
     
     
     public void saveBooks(List<Book> listBooks){
+        List<Book> listBooksSaved = loadBooks();
         tx.begin();
             for(int i=0; i<listBooks.size();i++){
-                if(i==listBooks.size()-1)
-                em.persist(listBooks.get(i));
+                if(listBooksSaved.contains(listBooks.get(i))
+                        && !listBooksSaved.get(i).equals(listBooks.get(i))){
+                    em.merge(listBooks.get(i));
+                }else{
+                    em.persist(listBooks.get(i));
+                }
             }
         tx.commit();
     }
@@ -43,15 +50,44 @@ public class SaveToBase {
                 .getResultList();
     }
     public void saveReaders(List<Reader> listReaders){
-        
+        List<Reader> listReadersSaved = loadReaders();
+        tx.begin();
+            for(int i=0; i<listReaders.size();i++){
+                if(listReadersSaved.contains(listReaders.get(i))
+                        && !listReadersSaved.get(i).equals(listReaders.get(i))){
+                    em.merge(listReaders.get(i));
+                }else{
+                    em.persist(listReaders.get(i));
+                }
+            }
+        tx.commit();
     }
     public List<Reader> loadReaders(){
-        return null;
+        return em.createQuery("SELECT r FROM Reader r")
+                .getResultList();
     }
     void saveHistories(List<History> listHistories) {
+        List<History> listHistoriesSaved = null;
+        
+            for(int i=0; i<listHistories.size();i++){
+                listHistoriesSaved = loadHistories();
+                tx.begin();
+                    if(listHistoriesSaved.contains(listHistories.get(i))){
+                        if(!listHistoriesSaved.get(i).equals(listHistories.get(i))){
+                            em.merge(listHistories.get(i).getBook());
+                            em.merge(listHistories.get(i));
+                        }
+                    }else{
+                        em.persist(listHistories.get(i));  
+                        em.merge(listHistories.get(i).getBook());
+                    }
+                tx.commit();
+            }
         
     }
     List<History> loadHistories() {
-        return null;
+        return em.createQuery("SELECT h FROM History h")
+                .getResultList();
     }
 }
+
