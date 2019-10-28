@@ -20,7 +20,7 @@ public class SKTVp18Library {
      */
     public static void main(String[] args) {
         String flag = "base";
-        if(args != null){
+        if(args != null && args.length != 0){
             flag = args[0];
         }
         App app = new App(flag);
